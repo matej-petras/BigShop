@@ -40,6 +40,6 @@ public class UIHandler {
         int productsAmount = scanner.nextInt();
 
         System.out.println("Adding " + productsAmount + " of product " + productIndex + "into inventory");
-        shop.addProductsToInventory(productIndex, productsAmount);
+        shop.requestAddition(productIndex, productsAmount);
     }
 }

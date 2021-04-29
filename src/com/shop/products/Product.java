@@ -1,14 +1,24 @@
 package com.shop.products;
 
+import com.shop.products.productRules.IAdditionRule;
+
+import java.util.List;
+
 public class Product {
     private final String name;
+    private final List<String> productParameters;
     private float totalPrice;
     private float price;
     private int count;
 
-    public Product(String name, float price) {
+    public Product(String name, List<String> productParameters, float price) {
         this.name = name;
+        this.productParameters = productParameters;
         this.price = price;
+    }
+
+    public List<String> getProductParameters(){
+        return this.productParameters;
     }
 
     public float getPrice() {

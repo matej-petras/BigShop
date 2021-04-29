@@ -2,6 +2,8 @@ package com.shop.products;
 
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Product should")
@@ -17,7 +19,7 @@ class ProductShould {
 
     @BeforeEach
     public void setProduct(){
-        this.product = new Product("product1", initialPrice);
+        this.product = new Product("product1", Arrays.asList("NA"), initialPrice);
     }
 
     @Test
