@@ -21,16 +21,14 @@ class ProductShould {
     }
 
     @Test
-    @DisplayName("not decrease the product price below zero")
-    public void decreasePriceNotBelowZero(){
-        product.setPrice( - 12.2f );
-        assertEquals(0.0f, product.getPrice());
+    @DisplayName("not allow the product price to be a negative number")
+    public void notAllowNegativePrice(){
+        assertThrows(IllegalArgumentException.class, () -> product.setPrice( - 12.2f ));
     }
 
     @Test
-    @DisplayName("not decrease the product count below zero")
-    public void decreaseCountNotBelowZero(){
-        product.setCount( -5 );
-        assertEquals(0, product.getCount());
+    @DisplayName("not allow the product count to be a negative number")
+    public void notAllowNegativeCount(){
+        assertThrows(IllegalArgumentException.class, () -> product.setCount( -5 ));
     }
 }

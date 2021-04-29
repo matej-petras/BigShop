@@ -15,9 +15,11 @@ public class Product {
     }
 
     public void setPrice(float price) {
+        if (price < 0)
+            throw new IllegalArgumentException(
+                    String.format("Price must not be negative. You entered: %d", price)
+            );
         this.price = price;
-        if (this.price < 0)
-            this.price = 0;
     }
 
     public int getCount() {
@@ -25,9 +27,11 @@ public class Product {
     }
 
     public void setCount(int count) {
+        if (count < 0)
+            throw new IllegalArgumentException(
+                    String.format("Count must not be negative. You entered: %d", count)
+            );
         this.count = count;
-        if (this.count < 0)
-            this.count = 0;
     }
 
     @Override
