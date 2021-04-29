@@ -41,5 +41,14 @@ class ShopShould {
         assertEquals(product.getPrice(), product.getTotalPrice());
     }
 
+    @Test
+    @DisplayName("increase the price of a multiple added products accordingly")
+    public void increasePriceOfMultipleAddedProduct(){
+        int productIndex = 0;
+        int productCount = 3;
+        this.shop.addProductsToInventory(productIndex, productCount);
+        Product product = this.shop.getProductByIndex(productIndex);
 
+        assertEquals(product.getPrice() * productCount, product.getTotalPrice());
+    }
 }

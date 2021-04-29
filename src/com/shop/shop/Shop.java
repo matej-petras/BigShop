@@ -14,7 +14,7 @@ public class Shop {
     public void addProductsToInventory(int productIndex, int productCount){
         Product targetProduct = this.productsList.get(productIndex);
         targetProduct.increaseCount(productCount);
-        targetProduct.increaseTotalPrice(targetProduct.getPrice());
+        targetProduct.increaseTotalPrice(targetProduct.getPrice() * productCount);
     }
 
     public Product getProductByIndex(int productIndex){
