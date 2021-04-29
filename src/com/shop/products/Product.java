@@ -15,6 +15,8 @@ public class Product {
         return this.price;
     }
 
+    public float getTotalPrice() { return this.totalPrice; }
+
     public void decreaseTotalPrice(float price) {
         if (this.totalPrice - price < 0)
             throw new IllegalArgumentException(

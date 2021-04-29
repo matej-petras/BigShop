@@ -13,7 +13,7 @@ public class UIHandler {
         this.shop = shop;
     }
 
-    public void HandleUserOptionSelection(){
+    public void handleUserOptionSelection(){
         final int selectedOption = scanner.nextInt();
 
         switch (selectedOption) {
@@ -40,5 +40,6 @@ public class UIHandler {
         int productsAmount = scanner.nextInt();
 
         System.out.println("Adding " + productsAmount + " of product " + productIndex + "into inventory");
+        shop.addProductsToInventory(productIndex, productsAmount);
     }
 }

@@ -25,7 +25,7 @@ public class UserInterface {
     }
 
     private void handleUserInput(){
-
+        uiHandler.handleUserOptionSelection();
         delayRefresh();
     }
 

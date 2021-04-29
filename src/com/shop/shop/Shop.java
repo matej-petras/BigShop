@@ -1,11 +1,23 @@
 package com.shop.shop;
 
-import com.shop.products.ProductInventory;
+import com.shop.products.Product;
+
+import java.util.List;
 
 public class Shop {
-    private ProductInventory inventory;
+    private List<Product> productsList;
 
-    public Shop(ProductInventory inventory){
-        this.inventory = inventory;
+    public Shop(List<Product> productsList){
+        this.productsList = productsList;
+    }
+
+    public void addProductsToInventory(int productIndex, int productCount){
+        Product targetProduct = this.productsList.get(productIndex);
+        targetProduct.increaseCount(productCount);
+        targetProduct.increaseTotalPrice(targetProduct.getPrice());
+    }
+
+    public Product getProductByIndex(int productIndex){
+        return this.productsList.get(productIndex);
     }
 }
