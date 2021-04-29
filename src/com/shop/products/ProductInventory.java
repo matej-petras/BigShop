@@ -9,8 +9,8 @@ public class ProductInventory {
         this.productsList = loader.getDataAsList();
     }
 
-    public void addMultipleProducts(int productIndex, int countIncrement){
-        productsList.get(productIndex).setCount(countIncrement);
+    public Product getProductWithIndex(int productIndex){
+        return productsList.get(productIndex);
     }
 
     public List<Product> getProductsList() {

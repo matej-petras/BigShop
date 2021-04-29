@@ -2,6 +2,7 @@ package com.shop.products;
 
 public class Product {
     private final String name;
+    private float totalPrice;
     private float price;
     private int count;
 
@@ -11,31 +12,39 @@ public class Product {
     }
 
     public float getPrice() {
-        return price;
+        return this.price;
     }
 
-    public void setPrice(float price) {
-        if (price < 0)
+    public void decreaseTotalPrice(float price) {
+        if (this.totalPrice - price < 0)
             throw new IllegalArgumentException(
-                    String.format("Price must not be negative. You entered: %d", price)
+                    String.format("Total price must not be negative. You entered: %.2f", price)
             );
-        this.price = price;
+        this.totalPrice -= price;
+    }
+
+    public void increaseTotalPrice(float price) {
+        this.totalPrice += price;
     }
 
     public int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
-        if (count < 0)
+    public void decreaseCount(int countDecrement) {
+        if (this.count - countDecrement < 0)
             throw new IllegalArgumentException(
-                    String.format("Count must not be negative. You entered: %d", count)
+                    String.format("Count must not be negative. You entered: %d", countDecrement)
             );
-        this.count = count;
+        this.count -= countDecrement;
+    }
+
+    public void increaseCount(int countIncrement) {
+        this.count += countIncrement;
     }
 
     @Override
     public String toString(){
-        return String.format("%10s %.2f (%d pcs)", this.name, this.price, this.count);
+        return String.format("%10s %.2f (%d pcs of total %.2f)", this.name, this.price, this.count, this.totalPrice);
     }
 }

@@ -14,12 +14,4 @@ class ProductInventoryShould {
         this.inventory = new ProductInventory(new ProductsLoader());
     }
 
-    @Test
-    @DisplayName("add products by increasing count")
-    public void addProductsToInventory(){
-        int count = 10;
-        int productIndex = 0;
-        this.inventory.addMultipleProducts(productIndex, count);
-        assertEquals(count, inventory.getProductsList().get(productIndex).getCount());
-    }
 }

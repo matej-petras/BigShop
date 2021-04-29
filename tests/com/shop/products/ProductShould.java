@@ -21,14 +21,14 @@ class ProductShould {
     }
 
     @Test
-    @DisplayName("not allow the product price to be a negative number")
-    public void notAllowNegativePrice(){
-        assertThrows(IllegalArgumentException.class, () -> product.setPrice( - 12.2f ));
+    @DisplayName("not allow the product total price to be a negative number")
+    public void notAllowNegativeTotalPrice(){
+        assertThrows(IllegalArgumentException.class, () -> this.product.decreaseTotalPrice(1000f));
     }
 
     @Test
     @DisplayName("not allow the product count to be a negative number")
     public void notAllowNegativeCount(){
-        assertThrows(IllegalArgumentException.class, () -> product.setCount( -5 ));
+        assertThrows(IllegalArgumentException.class, () -> this.product.decreaseCount(5));
     }
 }
