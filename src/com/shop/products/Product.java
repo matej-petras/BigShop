@@ -26,6 +26,8 @@ public class Product {
 
     public void setCount(int count) {
         this.count = count;
+        if (this.count < 0)
+            this.count = 0;
     }
 
     @Override

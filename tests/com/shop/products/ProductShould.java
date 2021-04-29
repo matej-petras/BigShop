@@ -1,13 +1,11 @@
 package com.shop.products;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Product should")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProductShould {
     private float initialPrice;
     private Product product;
@@ -18,7 +16,7 @@ class ProductShould {
     }
 
     @BeforeEach
-    private void setProduct(){
+    public void setProduct(){
         this.product = new Product("product1", initialPrice);
     }
 
