@@ -4,7 +4,7 @@ import com.shop.products.Product;
 import com.shop.rules.additionRules.*;
 import com.shop.rules.checkoutRules.InsuranceDiscount;
 import com.shop.rules.checkoutRules.ShopCheckoutRule;
-import com.shop.utils.IDataLoader;
+import com.shop.dataLoading.IDataLoader;
 import org.junit.jupiter.api.*;
 import java.util.Arrays;
 import java.util.List;

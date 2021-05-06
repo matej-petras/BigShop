@@ -6,6 +6,7 @@ import com.shop.rules.checkoutRules.ShopCheckoutRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Shop {
     private final List<Product> offeredProducts = new ArrayList<>();
@@ -28,24 +29,30 @@ public class Shop {
         Product targetProduct = this.offeredProducts.get(productIndex);
 
         for(ShopAdditionRule rule : this.additionRules)
-            if(rule.isApplicable(offeredProducts, targetProduct, incrementCount))
+            if (rule.isApplicable(offeredProducts, targetProduct, incrementCount)) {
                 rule.act(offeredProducts, targetProduct, incrementCount);
+                targetProduct.addAppliedRule(rule.getRuleMessage());
+            }
 
         targetProduct.increaseCount(incrementCount);
         targetProduct.increaseTotalPrice(targetProduct.getPrice() * incrementCount);
+        
+        for (ShopCheckoutRule rule : this.checkoutRules)
+            if (rule.isApplicable(offeredProducts))
+                rule.act(offeredProducts);
     }
 
-    public void checkout(){
-        System.out.println("Purchase Performed");
-        clearProducts();
-    }
-
-    public Product getProductByIndex(int productIndex){
-        return this.offeredProducts.get(productIndex);
-    }
-
-    private void clearProducts(){
+    public List<Product> getReceipt(){
+        List<Product> receiptContent = offeredProducts.stream()
+                .filter(product -> product.getCount() > 0).collect(Collectors.toList());
         for (Product product : offeredProducts)
             product.reset();
+
+        return receiptContent;
+    }
+
+    public List<Product> getProducts(){ return offeredProducts; }
+    public Product getProductByIndex(int productIndex){
+        return this.offeredProducts.get(productIndex);
     }
 }

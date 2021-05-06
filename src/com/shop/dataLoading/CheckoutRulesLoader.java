@@ -1,4 +1,4 @@
-package com.shop.utils;
+package com.shop.dataLoading;
 
 import com.shop.rules.checkoutRules.InsuranceDiscount;
 import com.shop.rules.checkoutRules.ShopCheckoutRule;

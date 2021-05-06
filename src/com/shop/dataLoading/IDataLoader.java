@@ -1,6 +1,4 @@
-package com.shop.utils;
-
-import com.shop.products.Product;
+package com.shop.dataLoading;
 
 import java.util.List;
 

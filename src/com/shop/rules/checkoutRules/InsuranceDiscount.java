@@ -1,13 +1,11 @@
 package com.shop.rules.checkoutRules;
 
 import com.shop.products.Product;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// TODO - finish this condition (need to check 'isApplicable' and implement 'act')
 public class InsuranceDiscount implements ShopCheckoutRule {
     public static final float DISCOUNT_PERCENTAGE_AMOUNT = 0.2f;
     private static final List<String> discountParameterCondition = Stream.of("headphones").collect(Collectors.toList());

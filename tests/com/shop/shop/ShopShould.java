@@ -3,7 +3,7 @@ package com.shop.shop;
 import com.shop.products.Product;
 import com.shop.rules.additionRules.ShopAdditionRule;
 import com.shop.rules.additionRules.SimBOGOFRule;
-import com.shop.utils.IDataLoader;
+import com.shop.dataLoading.IDataLoader;
 import org.junit.jupiter.api.*;
 
 import java.util.Arrays;

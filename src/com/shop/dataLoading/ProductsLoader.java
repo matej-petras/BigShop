@@ -1,6 +1,6 @@
-package com.shop.products;
+package com.shop.dataLoading;
 
-import com.shop.utils.IDataLoader;
+import com.shop.products.Product;
 
 import java.util.Arrays;
 import java.util.List;

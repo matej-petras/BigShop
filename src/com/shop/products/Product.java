@@ -1,10 +1,13 @@
 package com.shop.products;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class Product {
     private final String name;
     private final List<String> productParameters;
+    private final List<String> appliedRules;
     private float totalPrice;
     private float price;
     private int count;
@@ -13,6 +16,7 @@ public class Product {
         this.name = name;
         this.productParameters = productParameters;
         this.price = price;
+        this.appliedRules = new ArrayList<>();
     }
 
     public List<String> getProductParameters(){
@@ -53,13 +57,26 @@ public class Product {
             );
         this.count -= countDecrement;
     }
+
+    public void addAppliedRule(String ruleMessage){
+        if (! ruleMessage.isEmpty())
+            this.appliedRules.add(ruleMessage);
+    }
+
     public void reset(){
         this.totalPrice = 0;
         this.count = 0;
+        this.appliedRules.clear();
     }
 
     @Override
     public String toString(){
-        return String.format("%10s %.2f (%d pcs of total %.2f)", this.name, this.price, this.count, this.totalPrice);
+        String pieces = String.format("%.2f", this.price);
+        StringJoiner appliedRules = new StringJoiner(",");
+        for (String ruleMessage : this.appliedRules)
+            appliedRules.add(ruleMessage);
+
+        return String.format("%-25s   %-6s (%-3d pcs of total %.2f) | %s",
+                                this.name, pieces, this.count, this.totalPrice, appliedRules);
     }
 }

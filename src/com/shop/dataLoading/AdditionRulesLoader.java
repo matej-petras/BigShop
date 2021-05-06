@@ -1,8 +1,7 @@
-package com.shop.utils;
+package com.shop.dataLoading;
 
 import com.shop.rules.additionRules.ShopAdditionRule;
 import com.shop.rules.additionRules.SimBOGOFRule;
-import com.shop.utils.IDataLoader;
 
 import java.util.List;
 import java.util.stream.Collectors;
