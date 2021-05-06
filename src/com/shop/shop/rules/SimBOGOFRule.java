@@ -1,4 +1,4 @@
-package com.shop.products.productRules;
+package com.shop.shop.rules;
 
 import com.shop.products.Product;
 import java.util.List;
@@ -12,7 +12,6 @@ public class SimBOGOFRule implements IAdditionRule {
 
     @Override
     public void act(List<Product> productsList, Product product, int incrementCount) {
-        product.increaseCount(incrementCount * 2);
-        product.increaseTotalPrice(incrementCount * product.getPrice());
+        product.increaseCount(incrementCount);
     }
 }

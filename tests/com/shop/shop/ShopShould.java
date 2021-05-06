@@ -1,9 +1,8 @@
 package com.shop.shop;
 
 import com.shop.products.Product;
-import com.shop.products.ProductsLoader;
-import com.shop.products.productRules.IAdditionRule;
-import com.shop.products.productRules.SimBOGOFRule;
+import com.shop.shop.rules.IAdditionRule;
+import com.shop.shop.rules.SimBOGOFRule;
 import com.shop.utils.IDataLoader;
 import org.junit.jupiter.api.*;
 
@@ -35,7 +34,7 @@ class ShopShould {
     @Test
     @Disabled
     @DisplayName("be able to add products of one kind")
-    public void addProductsOfOneKind(){
+    public void addProductsOfOneKind() {
         int productIndex = 0;
         int productCount = 3;
         this.shop.requestAddition(productIndex, productCount);

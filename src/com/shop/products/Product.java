@@ -1,7 +1,5 @@
 package com.shop.products;
 
-import com.shop.products.productRules.IAdditionRule;
-
 import java.util.List;
 
 public class Product {

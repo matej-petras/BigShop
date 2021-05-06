@@ -1,7 +1,7 @@
 package com.shop.shop;
 
 import com.shop.products.Product;
-import com.shop.products.productRules.IAdditionRule;
+import com.shop.shop.rules.IAdditionRule;
 
 import java.util.List;
 
@@ -21,21 +21,17 @@ public class Shop {
         this.additionRules.add(rule);
     }
 
-    public void requestAddition(int productIndex, int incrementCount){
+    public void requestAddition(int productIndex, int incrementCount) throws RuntimeException {
         Product targetProduct = this.productsList.get(productIndex);
-        boolean anyRulesTriggered = false;
+        //boolean anyRulesTriggered = false;
 
         for(IAdditionRule rule : this.additionRules)
             if(rule.isApplicable(productsList, targetProduct, incrementCount)) {
                 rule.act(productsList, targetProduct, incrementCount);
-                System.out.println("trigger ?");
-                anyRulesTriggered = true;
+                //anyRulesTriggered = true;
             }
 
-        if (!anyRulesTriggered) {
-            addProductsToInventory(targetProduct, incrementCount);
-            System.out.println("MEOW");
-        }
+        addProductsToInventory(targetProduct, incrementCount);
     }
 
     private void addProductsToInventory(Product targetProduct, int incrementCount){

@@ -1,7 +1,7 @@
 package com.shop.shop;
 
-import com.shop.products.productRules.IAdditionRule;
-import com.shop.products.productRules.SimBOGOFRule;
+import com.shop.shop.rules.IAdditionRule;
+import com.shop.shop.rules.SimBOGOFRule;
 import com.shop.utils.IDataLoader;
 
 import java.util.List;

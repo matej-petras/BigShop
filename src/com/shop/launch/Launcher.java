@@ -1,12 +1,10 @@
 package com.shop.launch;
 
 import com.shop.products.ProductsLoader;
-import com.shop.products.productRules.IAdditionRule;
 import com.shop.shop.RulesLoader;
 import com.shop.shop.Shop;
 import com.shop.ui.UIHandler;
 import com.shop.ui.UserInterface;
-import com.shop.utils.IDataLoader;
 
 import java.util.Scanner;
 

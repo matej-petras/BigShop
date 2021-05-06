@@ -33,13 +33,17 @@ public class UIHandler {
         }
     }
 
-    private void addProductsToInventory(){
+    private void addProductsToInventory() {
         System.out.print("Enter index of requested product: ");
         int productIndex = scanner.nextInt();
         System.out.print("Enter the amount of requested products: ");
         int productsAmount = scanner.nextInt();
 
         System.out.println("Adding " + productsAmount + " of product " + productIndex + "into inventory");
-        shop.requestAddition(productIndex, productsAmount);
+        try {
+            shop.requestAddition(productIndex, productsAmount);
+        } catch (Exception exception){
+            System.err.println("Error: " + exception.getMessage());
+        }
     }
 }
