@@ -25,7 +25,8 @@ public class UIHandler {
                 addProductsToShoppingListMenu();
                 break;
             case UserInterface.PURCHASE_OPTION_INDEX:
-                printReceipt(shop.getReceipt());
+                List<Product> receipt = shop.performPurchase();
+                printReceipt(receipt);
                 System.out.println("Thank you for your purchase !");
                 break;
             case UserInterface.EXIT_OPTION_INDEX:

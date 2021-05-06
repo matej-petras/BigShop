@@ -70,6 +70,19 @@ public class Product {
     }
 
     @Override
+    public Product clone() {
+        Product product;
+        try {
+            product = (Product) super.clone();
+        } catch (Exception exception){
+            product = new Product(this.name, getProductParameters(), getPrice());
+            product.increaseTotalPrice(this.getTotalPrice());
+            product.increaseCount(this.getCount());
+        }
+        return product;
+    }
+
+    @Override
     public String toString(){
         String pieces = String.format("%.2f", this.price);
         StringJoiner appliedRules = new StringJoiner(",");

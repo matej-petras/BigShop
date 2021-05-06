@@ -36,19 +36,28 @@ public class Shop {
 
         targetProduct.increaseCount(incrementCount);
         targetProduct.increaseTotalPrice(targetProduct.getPrice() * incrementCount);
-        
+    }
+
+    private void beforePurchaseCheckout(){
         for (ShopCheckoutRule rule : this.checkoutRules)
             if (rule.isApplicable(offeredProducts))
                 rule.act(offeredProducts);
     }
 
-    public List<Product> getReceipt(){
-        List<Product> receiptContent = offeredProducts.stream()
-                .filter(product -> product.getCount() > 0).collect(Collectors.toList());
+    public List<Product> performPurchase(){
+        beforePurchaseCheckout();
+
+        List<Product> receipt = getReceipt();
         for (Product product : offeredProducts)
             product.reset();
+        return receipt;
+    }
 
-        return receiptContent;
+    private List<Product> getReceipt(){
+        return offeredProducts.stream()
+                .filter(product -> product.getCount() > 0)
+                .map(Product::clone)
+                .collect(Collectors.toList());
     }
 
     public List<Product> getProducts(){ return offeredProducts; }

@@ -85,20 +85,20 @@ public class ShopRulesShould {
     }
 
     @Test
-    @Disabled
     @DisplayName("discount insurance price when headphones are in products list")
     public void discountInsurancePriceWhenBuyingHeadphones(){
         int headphonesIndex = 3;
         int headphonesCount = 2;
         this.shop.addProductsToCard(headphonesIndex, headphonesCount);
 
-        int insuraceIndex = 2;
-        int insurancesCount = 1;
-        float insurancePrice = shop.getProductByIndex(insuraceIndex).getPrice();
+        int insuranceIndex = 2;
+        int insurancesCount = 5;
+        float insurancePrice = shop.getProductByIndex(insuranceIndex).getPrice();
         float expectedPrice = (insurancePrice - insurancePrice* InsuranceDiscount.DISCOUNT_PERCENTAGE_AMOUNT) * insurancesCount;
 
-        this.shop.addProductsToCard(insuraceIndex, insurancesCount);
-        assertEquals(expectedPrice, shop.getProductByIndex(insuraceIndex).getTotalPrice());
+        this.shop.addProductsToCard(insuranceIndex, insurancesCount);
+        Product insurance = this.shop.performPurchase().get(0);     // insurance is the only item in list
+        assertEquals(expectedPrice, insurance.getTotalPrice());
     }
 
     // Test class specific data
