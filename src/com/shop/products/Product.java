@@ -19,11 +19,20 @@ public class Product {
         return this.productParameters;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public float getPrice() {
         return this.price;
     }
 
     public float getTotalPrice() { return this.totalPrice; }
+
+
+    public void increaseTotalPrice(float price) {
+        this.totalPrice += price;
+    }
 
     public void decreaseTotalPrice(float price) {
         if (this.totalPrice - price < 0)
@@ -33,12 +42,8 @@ public class Product {
         this.totalPrice -= price;
     }
 
-    public void increaseTotalPrice(float price) {
-        this.totalPrice += price;
-    }
-
-    public int getCount() {
-        return count;
+    public void increaseCount(int countIncrement) {
+        this.count += countIncrement;
     }
 
     public void decreaseCount(int countDecrement) {
@@ -48,9 +53,9 @@ public class Product {
             );
         this.count -= countDecrement;
     }
-
-    public void increaseCount(int countIncrement) {
-        this.count += countIncrement;
+    public void reset(){
+        this.totalPrice = 0;
+        this.count = 0;
     }
 
     @Override

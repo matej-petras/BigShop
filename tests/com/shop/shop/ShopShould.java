@@ -1,8 +1,8 @@
 package com.shop.shop;
 
 import com.shop.products.Product;
-import com.shop.shop.rules.IAdditionRule;
-import com.shop.shop.rules.SimBOGOFRule;
+import com.shop.rules.additionRules.ShopAdditionRule;
+import com.shop.rules.additionRules.SimBOGOFRule;
 import com.shop.utils.IDataLoader;
 import org.junit.jupiter.api.*;
 
@@ -28,17 +28,7 @@ class ShopShould {
 
     @BeforeEach
     public void resetShop(){
-        this.shop = new Shop(productLoader.getDataAsList(), rulesLoader.getDataAsList());
-    }
-
-    @Test
-    @Disabled
-    @DisplayName("be able to add products of one kind")
-    public void addProductsOfOneKind() {
-        int productIndex = 0;
-        int productCount = 3;
-        this.shop.requestAddition(productIndex, productCount);
-        assertEquals(productCount, shop.getProductByIndex(productIndex).getCount());
+        this.shop = new Shop(productLoader.getDataAsList());
     }
 
     @Test
@@ -46,7 +36,7 @@ class ShopShould {
     public void increasePriceOfAddedProduct(){
         int productIndex = 0;
         int productCount = 1;
-        this.shop.requestAddition(productIndex, productCount);
+        this.shop.addProductsToCard(productIndex, productCount);
         Product product = this.shop.getProductByIndex(productIndex);
 
         assertEquals(product.getPrice(), product.getTotalPrice());
@@ -57,7 +47,7 @@ class ShopShould {
     public void increasePriceOfMultipleAddedProduct(){
         int productIndex = 0;
         int productCount = 3;
-        this.shop.requestAddition(productIndex, productCount);
+        this.shop.addProductsToCard(productIndex, productCount);
         Product product = this.shop.getProductByIndex(productIndex);
 
         assertEquals(product.getPrice() * productCount, product.getTotalPrice());
@@ -79,9 +69,9 @@ class ShopShould {
         }
     }
 
-    private static class RulesLoader implements IDataLoader<IAdditionRule> {
+    private static class RulesLoader implements IDataLoader<ShopAdditionRule> {
         @Override
-        public List<IAdditionRule> getDataAsList() {
+        public List<ShopAdditionRule> getDataAsList() {
             return Stream.of(
                     new SimBOGOFRule()
             ).collect(Collectors.toList());

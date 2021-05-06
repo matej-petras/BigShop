@@ -1,10 +1,10 @@
-package com.shop.shop.rules;
+package com.shop.rules.additionRules;
 
 import com.shop.products.Product;
 import java.util.List;
 
 // Max 10 SIMs in one buy
-public class SimLawLimitation implements IAdditionRule {
+public class SimLawLimitation implements ShopAdditionRule {
     public static final int LAW_LIMITATION = 10;
 
     @Override
@@ -19,5 +19,10 @@ public class SimLawLimitation implements IAdditionRule {
                                         LAW_LIMITATION, product.getCount() + incrementCount);
             throw new RuntimeException(message);
         }
+    }
+
+    @Override
+    public String getRuleMessage() {
+        return "";
     }
 }

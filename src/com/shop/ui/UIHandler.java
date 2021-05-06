@@ -18,7 +18,7 @@ public class UIHandler {
 
         switch (selectedOption) {
             case UserInterface.SELECT_PRODUCT_OPTION_INDEX:
-                addProductsToInventory();
+                addProductsToShoppingListMenu();
                 break;
             case UserInterface.PURCHASE_OPTION_INDEX:
                 System.out.println("Thank you for your purchase !");
@@ -33,7 +33,7 @@ public class UIHandler {
         }
     }
 
-    private void addProductsToInventory() {
+    private void addProductsToShoppingListMenu() {
         System.out.print("Enter index of requested product: ");
         int productIndex = scanner.nextInt();
         System.out.print("Enter the amount of requested products: ");
@@ -41,7 +41,7 @@ public class UIHandler {
 
         System.out.println("Adding " + productsAmount + " of product " + productIndex + "into inventory");
         try {
-            shop.requestAddition(productIndex, productsAmount);
+            shop.addProductsToCard(productIndex, productsAmount);
         } catch (Exception exception){
             System.err.println("Error: " + exception.getMessage());
         }

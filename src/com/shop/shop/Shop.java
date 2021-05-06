@@ -1,45 +1,51 @@
 package com.shop.shop;
 
 import com.shop.products.Product;
-import com.shop.shop.rules.IAdditionRule;
+import com.shop.rules.additionRules.ShopAdditionRule;
+import com.shop.rules.checkoutRules.ShopCheckoutRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shop {
-    private final List<Product> productsList;
-    private final List<IAdditionRule> additionRules;
+    private final List<Product> offeredProducts = new ArrayList<>();
+    private final List<ShopAdditionRule> additionRules = new ArrayList<>();
+    private final List<ShopCheckoutRule> checkoutRules = new ArrayList<>();
 
-    public Shop(List<Product> productsList, List<IAdditionRule> rules){
-        this.productsList = productsList;
-        this.additionRules = rules;
+    public Shop(List<Product> offeredProducts){
+        this.offeredProducts.addAll(offeredProducts);
     }
 
-    public List<IAdditionRule>  getRules() {
-        return this.additionRules;
-    }
-    public void addAdditionRule(IAdditionRule rule){
-        this.additionRules.add(rule);
-    }
-
-    public void requestAddition(int productIndex, int incrementCount) throws RuntimeException {
-        Product targetProduct = this.productsList.get(productIndex);
-        //boolean anyRulesTriggered = false;
-
-        for(IAdditionRule rule : this.additionRules)
-            if(rule.isApplicable(productsList, targetProduct, incrementCount)) {
-                rule.act(productsList, targetProduct, incrementCount);
-                //anyRulesTriggered = true;
-            }
-
-        addProductsToInventory(targetProduct, incrementCount);
+    public Shop(List<Product> offeredProducts,
+                List<ShopAdditionRule> additionRules,
+                List<ShopCheckoutRule> checkoutRules){
+        this.offeredProducts.addAll(offeredProducts);
+        this.additionRules.addAll(additionRules);
+        this.checkoutRules.addAll(checkoutRules);
     }
 
-    private void addProductsToInventory(Product targetProduct, int incrementCount){
+    public void addProductsToCard(int productIndex, int incrementCount) throws RuntimeException {
+        Product targetProduct = this.offeredProducts.get(productIndex);
+
+        for(ShopAdditionRule rule : this.additionRules)
+            if(rule.isApplicable(offeredProducts, targetProduct, incrementCount))
+                rule.act(offeredProducts, targetProduct, incrementCount);
+
         targetProduct.increaseCount(incrementCount);
         targetProduct.increaseTotalPrice(targetProduct.getPrice() * incrementCount);
     }
 
+    public void checkout(){
+        System.out.println("Purchase Performed");
+        clearProducts();
+    }
+
     public Product getProductByIndex(int productIndex){
-        return this.productsList.get(productIndex);
+        return this.offeredProducts.get(productIndex);
+    }
+
+    private void clearProducts(){
+        for (Product product : offeredProducts)
+            product.reset();
     }
 }

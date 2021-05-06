@@ -1,16 +1,16 @@
-package com.shop.shop;
+package com.shop.utils;
 
-import com.shop.shop.rules.IAdditionRule;
-import com.shop.shop.rules.SimBOGOFRule;
+import com.shop.rules.additionRules.ShopAdditionRule;
+import com.shop.rules.additionRules.SimBOGOFRule;
 import com.shop.utils.IDataLoader;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RulesLoader implements IDataLoader<IAdditionRule> {
+public class AdditionRulesLoader implements IDataLoader<ShopAdditionRule> {
     @Override
-    public List<IAdditionRule> getDataAsList() {
+    public List<ShopAdditionRule> getDataAsList() {
         return Stream.of(
                     new SimBOGOFRule()
                 ).collect(Collectors.toList());

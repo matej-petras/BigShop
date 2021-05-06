@@ -1,12 +1,13 @@
 package com.shop.shop;
 
 import com.shop.products.Product;
-import com.shop.shop.rules.*;
+import com.shop.rules.additionRules.*;
+import com.shop.rules.checkoutRules.InsuranceDiscount;
+import com.shop.rules.checkoutRules.ShopCheckoutRule;
 import com.shop.utils.IDataLoader;
 import org.junit.jupiter.api.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,17 +17,22 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ShopRulesShould {
     private Shop shop;
     private IDataLoader<Product> productsLoader;
-    private IDataLoader<IAdditionRule> rulesLoader;
+    private IDataLoader<ShopAdditionRule> additionRules;
+    private IDataLoader<ShopCheckoutRule> checkoutRules;
 
     @BeforeAll
     public void setInventory() {
         productsLoader = new ProductsLoader();
-        rulesLoader = new RulesLoader();
+        additionRules = new AdditionRulesLoader();
+        checkoutRules = new CheckoutRulesLoader();
     }
 
     @BeforeEach
     public void resetShop(){
-        this.shop = new Shop(this.productsLoader.getDataAsList(), this.rulesLoader.getDataAsList());
+        this.shop = new Shop(this.productsLoader.getDataAsList(),
+                             this.additionRules.getDataAsList(),
+                             this.checkoutRules.getDataAsList()
+                        );
     }
 
     @Test
@@ -34,7 +40,7 @@ public class ShopRulesShould {
     public void addFreeSimToSimPurchase() {
         int simProductIndex = 0;
         int simCount = 2;
-        this.shop.requestAddition(simProductIndex, simCount);
+        this.shop.addProductsToCard(simProductIndex, simCount);
         assertEquals(simCount * 2, this.shop.getProductByIndex(simProductIndex).getCount());
     }
 
@@ -43,7 +49,7 @@ public class ShopRulesShould {
     public void addSimCardsAboveLimitToPurchase(){
         int simProductIndex = 0;
         int simCount = SimLawLimitation.LAW_LIMITATION + 1;
-        assertThrows(RuntimeException.class, () -> this.shop.requestAddition(simProductIndex, simCount));
+        assertThrows(RuntimeException.class, () -> this.shop.addProductsToCard(simProductIndex, simCount));
     }
 
     @Test
@@ -51,7 +57,7 @@ public class ShopRulesShould {
     public void addSimCardsAlmostInLimitToPurchase(){
         int simProductIndex = 0;
         int simCount = SimLawLimitation.LAW_LIMITATION/2;   // count in the BOGOF Rule as well
-        assertDoesNotThrow(() -> this.shop.requestAddition(simProductIndex, simCount));
+        assertDoesNotThrow(() -> this.shop.addProductsToCard(simProductIndex, simCount));
     }
 
     @Test
@@ -62,7 +68,7 @@ public class ShopRulesShould {
         float price = this.shop.getProductByIndex(simProductIndex).getPrice();
         float expectedPrice = (price + price * ApplyTaxRule.TAX_PERCENTAGE_AMOUNT) * simCount;
 
-        this.shop.requestAddition(simProductIndex, simCount);
+        this.shop.addProductsToCard(simProductIndex, simCount);
         assertEquals(expectedPrice, this.shop.getProductByIndex(simProductIndex).getTotalPrice());
     }
 
@@ -74,7 +80,7 @@ public class ShopRulesShould {
         float price = this.shop.getProductByIndex(insuranceProductIndex).getPrice();
         float expectedPrice = price * insurancesCount;
 
-        this.shop.requestAddition(insuranceProductIndex, insurancesCount);
+        this.shop.addProductsToCard(insuranceProductIndex, insurancesCount);
         assertEquals(expectedPrice, this.shop.getProductByIndex(insuranceProductIndex).getTotalPrice());
     }
 
@@ -84,14 +90,14 @@ public class ShopRulesShould {
     public void discountInsurancePriceWhenBuyingHeadphones(){
         int headphonesIndex = 3;
         int headphonesCount = 2;
-        this.shop.requestAddition(headphonesIndex, headphonesCount);
+        this.shop.addProductsToCard(headphonesIndex, headphonesCount);
 
         int insuraceIndex = 2;
         int insurancesCount = 1;
         float insurancePrice = shop.getProductByIndex(insuraceIndex).getPrice();
-        float expectedPrice = (insurancePrice - insurancePrice*InsuranceDiscount.DISCOUNT_PERCENTAGE_AMOUNT) * insurancesCount;
+        float expectedPrice = (insurancePrice - insurancePrice* InsuranceDiscount.DISCOUNT_PERCENTAGE_AMOUNT) * insurancesCount;
 
-        this.shop.requestAddition(insuraceIndex, insurancesCount);
+        this.shop.addProductsToCard(insuraceIndex, insurancesCount);
         assertEquals(expectedPrice, shop.getProductByIndex(insuraceIndex).getTotalPrice());
     }
 
@@ -113,13 +119,21 @@ public class ShopRulesShould {
         }
     }
 
-    private static class RulesLoader implements IDataLoader<IAdditionRule> {
+    private static class AdditionRulesLoader implements IDataLoader<ShopAdditionRule> {
         @Override
-        public List<IAdditionRule> getDataAsList() {
+        public List<ShopAdditionRule> getDataAsList() {
             return Stream.of(
                         new SimBOGOFRule(),
                         new SimLawLimitation(),
                         new ApplyTaxRule()
+                    ).collect(Collectors.toList());
+        }
+    }
+    private static class CheckoutRulesLoader implements IDataLoader<ShopCheckoutRule> {
+        @Override
+        public List<ShopCheckoutRule> getDataAsList() {
+            return Stream.of(
+                        new InsuranceDiscount()
                     ).collect(Collectors.toList());
         }
     }

@@ -1,13 +1,12 @@
-package com.shop.shop.rules;
+package com.shop.rules.additionRules;
 
 import com.shop.products.Product;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ApplyTaxRule implements IAdditionRule {
+public class ApplyTaxRule implements ShopAdditionRule {
     public static final float TAX_PERCENTAGE_AMOUNT = 0.12f;
     private static final List<String> excludedTaxableItems = Stream.of("insurance").collect(Collectors.toList());
 
@@ -25,5 +24,9 @@ public class ApplyTaxRule implements IAdditionRule {
     public void act(List<Product> productsList, Product product, int incrementCount) throws RuntimeException {
         float price = product.getPrice();
         product.increaseTotalPrice(price*TAX_PERCENTAGE_AMOUNT * incrementCount);
+    }
+
+    public String getRuleMessage(){
+        return String.format("Tax +%.2f%%", TAX_PERCENTAGE_AMOUNT * 100);
     }
 }
